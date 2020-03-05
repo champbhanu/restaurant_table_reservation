@@ -1,2 +1,3 @@
 # restaurant_table_reservation
-Table booking microservice in restaurant
+restaurant_table_reservation
+Work in progress
