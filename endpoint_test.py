@@ -2,7 +2,6 @@ from unittest import TestCase
 
 import requests
 
-
 class TestFlaskApiUsingRequests(TestCase):    
     def test_create(self):
         payload = {
