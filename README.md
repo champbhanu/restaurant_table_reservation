@@ -15,7 +15,7 @@ Flask SQL Alchemy
 pip install Flask-SQLAlchemy
 ```
 
-WTFormsMigrate
+DB Migrate
 ```
 pip install flask_migrate
 ```
