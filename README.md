@@ -23,8 +23,7 @@ pip install flask_migrate
 ## Running the application
 Simply run "run.py", this will start the local web server.
 
-## Admin section
-To access the admin portion of the application, go to /admin.
+
 
 ## Notes
 Metrics:
