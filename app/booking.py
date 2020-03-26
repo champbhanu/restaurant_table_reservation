@@ -1,6 +1,6 @@
 from flask_restful import Resource, Api,reqparse
 from datetime import datetime ,timedelta
-from .controller import create_reservation,get_reservation
+from .controller import create_reservation,get_reservation,get_guest_id
 from app import app
 import json
 
@@ -39,14 +39,15 @@ class index(Resource):
     elif not reservation:      
       return {"message": "Request Status","result":"That time is taken!  Try another time"},201
       #return redirect('/make_reservation')
-    return {"message": "Request Status","result":"You reservation is confirmed"},201
+    get_guest_data= get_guest_id(args)
+    return {"message": "Request Status","result":{"Status":"Confirmed","guest_name":get_guest_data.name,"guest_id":get_guest_data.id}},201
   def get(self):
     return {"message": "Requested data","result": "nothing to display"},200
 class booking(Resource):
   def get(self,num):
     reservation = get_reservation(num)
     if reservation:
-      return {"message": "Requested Data","result":{"confirmation_num": reservation.id,"no_of_guests": reservation.num_guests}},200
+      return {"message": "Requested Data","result":{"guest_id": reservation.guest_id ,"no_of_guests": reservation.num_guests}},200
     else:      
       return {"message": "Requested Data","result": 'no reservation with that confirmation number'},200
 api.add_resource(index,'/')

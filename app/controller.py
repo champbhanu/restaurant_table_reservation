@@ -45,11 +45,16 @@ def create_reservation(input_data):
     db.session.add(reservation)
     db.session.commit()
     return reservation
-def get_reservation(reservation_id):
-    reservation = Reservation.query.filter_by(id=int(reservation_id)).first()
+def get_reservation(guestid):
+    reservation = Reservation.query.filter_by(guest_id=int(guestid)).first()
     if reservation is not None:
         return reservation
     else:
       return ''
-  
+def get_guest_id(input_data):
+    guest = Guest.query.filter_by(phone_number=input_data['guest_phone']).first()
+    if guest is not None:
+        return guest
+    else:
+      return ''
     
