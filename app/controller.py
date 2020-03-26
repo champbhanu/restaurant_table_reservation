@@ -45,5 +45,11 @@ def create_reservation(input_data):
     db.session.add(reservation)
     db.session.commit()
     return reservation
+def get_reservation(reservation_id):
+    reservation = Reservation.query.filter_by(id=int(reservation_id)).first()
+    if reservation is not None:
+        return reservation
+    else:
+      return ''
   
     

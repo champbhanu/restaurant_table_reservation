@@ -1,14 +1,8 @@
-from flask import Flask , request,jsonify
 from flask_restful import Resource, Api,reqparse
-from flask_migrate import Migrate
 from datetime import datetime ,timedelta
-import json
-from .models import MAX_TABLE_CAPACITY
-from .controller import create_reservation
+from .controller import create_reservation,get_reservation
 from app import app
-
-
-
+import json
 
 api = Api(app)
 RESTAURANT_OPEN_TIME=16
@@ -50,10 +44,13 @@ class index(Resource):
     return {"message": "Requested data","result": "nothing to display"},200
 class booking(Resource):
   def get(self,num):
-    return {"message": "Requested Data","result": num *3},200
+    reservation = get_reservation(num)
+    if reservation:
+      return {"message": "Requested Data","result":{"confirmation_num": reservation.id,"no_of_guests": reservation.num_guests}},200
+    else:      
+      return {"message": "Requested Data","result": 'no reservation with that confirmation number'},200
 api.add_resource(index,'/')
 api.add_resource(booking, '/booking/<int:num>')
 
-#if __name__ == "__main__":
-#  app.run(debug = True)
+
 
