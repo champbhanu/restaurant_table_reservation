@@ -2,7 +2,7 @@ from flask_restful import Resource, Api,reqparse
 from datetime import datetime ,timedelta
 from .controller import create_reservation,get_reservation,get_guest_id
 from app import app
-import json
+
 
 api = Api(app)
 RESTAURANT_OPEN_TIME=16
@@ -32,17 +32,16 @@ class index(Resource):
             return {"message": "requested data","result":"The restaurant is closed at that hour!"},200
     reservation = create_reservation(args)
     
-    #return {"message": "requested data","result":json.dumps(args)},201
+   
     if reservation == 'capacity':            
             return {"message": "Request Status","result":"No tables with that size"},200
-            #return redirect('/index')    
+           
     elif not reservation:      
       return {"message": "Request Status","result":"That time is taken!  Try another time"},201
-      #return redirect('/make_reservation')
+  
     get_guest_data= get_guest_id(args)
     return {"message": "Request Status","result":{"Status":"Confirmed","guest_name":get_guest_data.name,"guest_id":get_guest_data.id}},201
-  def get(self):
-    return {"message": "Requested data","result": "nothing to display"},200
+ 
 class booking(Resource):
   def get(self,num):
     reservation = get_reservation(num)

@@ -1,9 +1,8 @@
-#from flask_migrate import Migrate
 from .models import Table, Guest, Reservation
 from app import db
 import datetime
 
-#Migrate(app,db)
+
 DEFAULT_RESERVATION_LENGTH = 1 # 1 hour
 
 def create_reservation(input_data):
@@ -23,8 +22,7 @@ def create_reservation(input_data):
     # check reservations
     begin_range = input_data['reservation_datetime'] - datetime.timedelta(hours=DEFAULT_RESERVATION_LENGTH)
     end_range = input_data['reservation_datetime'] + datetime.timedelta(hours=DEFAULT_RESERVATION_LENGTH)
-    # reservations = Reservation.query.filter(Reservation.table.in_(
-    #     t_ids), Reservation.reservation_time >= begin_range, Reservation.reservation_time <= end_range).all()
+    
     reservations = Reservation.query.join(Reservation.table).filter(Table.id.in_(t_ids),
                     Reservation.reservation_time >= begin_range, Reservation.reservation_time <= end_range).order_by(Table.capacity.desc()).all()
     if reservations:
